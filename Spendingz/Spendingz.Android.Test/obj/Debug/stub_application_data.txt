@@ -1,2 +1,0 @@
-android.app.Application
-Spendingz.Android.Test.Spendingz.Android.Test
