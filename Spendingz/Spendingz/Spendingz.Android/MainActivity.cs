@@ -7,6 +7,8 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Spendingz.Droid.Services;
+using GalaSoft.MvvmLight.Ioc;
+using Spendingz.Services;
 
 namespace Spendingz.Droid
 {
@@ -19,9 +21,15 @@ namespace Spendingz.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(bundle);
-            var storage = new LocalStorage(this);
+            Setup();
             global::Xamarin.Forms.Forms.Init(this, bundle);
-            LoadApplication(new App(storage));
+            LoadApplication(new App());
+        }
+
+        private void Setup()
+        {
+            SimpleIoc.Default.Register<IDbStorage>(()=> new DbStorage());
+            SimpleIoc.Default.Register<ILocalStorage>(()=> new LocalStorage(this));
         }
     }
 }

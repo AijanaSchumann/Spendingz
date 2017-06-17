@@ -5,12 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Spendingz.Model
+namespace Spendingz.Model.Data
 {
-    public class Category
+    public class Category : StorageObject
     {
-        [PrimaryKey,AutoIncrement]
-        private int Id { get; set; }
+        
 
         private string _title;
         public string Title

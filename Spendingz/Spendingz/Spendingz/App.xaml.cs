@@ -13,29 +13,22 @@ namespace Spendingz
 {
     public partial class App : Application
     {
-        private static string SETUP_NEEDED = "SETUP_NEEDED";
+        public static readonly string SETUP_FINISHED = "SETUP_FINISHED";
 
         public App()
         {
             InitializeComponent();
 
-            MainPage = new MonthlyOverviewPage();
-        }
-
-        public App(ILocalStorage storage)
-        {
-            if (!SimpleIoc.Default.IsRegistered<ILocalStorage>())
+            if (SimpleIoc.Default.IsRegistered<ILocalStorage>())
             {
-                SimpleIoc.Default.Register(() => storage);
+                var localStorage = SimpleIoc.Default.GetInstance<ILocalStorage>();
+                SetPage(localStorage);
             }
-          
-            InitializeComponent();
-            SetPage(storage);
         }
 
         public static void SetPage(ILocalStorage storage)
         {
-            if (!storage.GetBool(SETUP_NEEDED))
+            if (!storage.GetBool(SETUP_FINISHED))
             {
                 Current.MainPage = new SetupPage();
             }

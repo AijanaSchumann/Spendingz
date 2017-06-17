@@ -8,7 +8,7 @@ namespace Spendingz.Services
 {
     public interface ILocalStorage
     {
-        void SaveValue(string key, string value);
+        void SaveBool(string key, bool value);
 
         bool GetBool(string key);
     }

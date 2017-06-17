@@ -28,14 +28,12 @@ namespace Spendingz.Droid.Services
 
         public bool GetBool(string key)
         {
-            var value = sharedpreferences.GetString(key, null);
-            var parseResult = bool.TryParse(value, out bool result);
-            return parseResult;
+            return sharedpreferences.GetBoolean(key, false);
         }
 
-        public void SaveValue(string key, string value)
+        public void SaveBool(string key, bool value)
         {
-            editor.PutString(key,value);
+            editor.PutBoolean(key,value);
             editor.Commit();
         }
     }
