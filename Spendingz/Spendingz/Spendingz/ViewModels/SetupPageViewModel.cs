@@ -1,6 +1,8 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using Spendingz.Model;
+using Spendingz.Model.Data;
+using Spendingz.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,14 +17,13 @@ namespace Spendingz.ViewModels
     {
         private string _newCategoryTitle;
         private ObservableCollection<Category> _demoCategories;
-
+        private ILocalStorage _localStorage;
+        private IDbStorage _dbStorage;
+        private INavigation _navigation;
         private RelayCommand<Category> _deleteCategory;
-
         private RelayCommand _createCategory;
-
         private RelayCommand _saveCategories;
-
-        private RelayCommand _dontSave;
+        private RelayCommand _createLater;
 
         public string NewCategoryTitle {
             get
@@ -46,9 +47,11 @@ namespace Spendingz.ViewModels
             }
         }
 
-        public SetupPageViewModel()
+        public SetupPageViewModel(ILocalStorage localStorage, IDbStorage dbStorage, INavigation nav)
         {
-            
+            _localStorage = localStorage;
+            _dbStorage = dbStorage;
+            _navigation = nav;
             DemoCategories = new ObservableCollection<Category> { new Category { Title = "Lebensmittel" }, new Category { Title="Kino" }, new Category { Title = "Reisen" } };
 
         }
@@ -96,7 +99,11 @@ namespace Spendingz.ViewModels
                 {
                     _saveCategories = new RelayCommand(()=> 
                     {
-                        //TODO: save categories to db and nav
+                        _localStorage.SaveBool(App.SETUP_FINISHED,true);
+                        _dbStorage.CreateDatabase<Category>();
+                        _dbStorage.CreateEntries(DemoCategories.ToList());
+                        _navigation.NavigateTo(AppPages.MonthlyOverviewPage);
+                        _navigation.RemoveFromHistory(AppPages.SetupPage);
                     });
                     return _saveCategories;
                 }
@@ -107,6 +114,25 @@ namespace Spendingz.ViewModels
             }
         }
 
+        public RelayCommand CreateCategoriesLater
+        {
+            get
+            {
+                if(_createLater == null)
+                {
+                    _createLater = new RelayCommand(()=> 
+                    {
+                        _localStorage.SaveBool(App.SETUP_FINISHED, true);
+                        _navigation.NavigateTo(AppPages.MonthlyOverviewPage);
+                    });
+                    return _createLater;
+                }
+                else
+                {
+                    return _createLater;
+                }
+            }
+        }
         
     }
 }

@@ -14,14 +14,12 @@
                 <RowDefinition Height="50"/>
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
-            
+
             <ListView Grid.Row="1" ItemsSource="{Binding DemoCategories}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <TextCell Text="{Binding Title}">
                             <TextCell.ContextActions>
-                                <MenuItem  
-                     Text="Edit" />
                                 <MenuItem 
                      Text="Delete" 
                      Command="{Binding Path=BindingContext.DeleteCatagory, Source={x:Reference Name=SetupPage}}" CommandParameter="{Binding .}"/>
@@ -31,23 +29,19 @@
                 </ListView.ItemTemplate>
             </ListView>
             <Grid Grid.Row="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="80"/>
-            </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
                 <Entry x:Name="newCategory" Grid.Column="0" Text="{Binding NewCategoryTitle}" Placeholder="New category title" />
-            <Button Grid.Column="1" Text="Add" 
+                <Button Grid.Column="1" Text="Add" 
                     Command="{Binding CreateCategory}" >
-            </Button>
-         </Grid>
+                </Button>
+            </Grid>
         </Grid>
         <StackLayout Orientation="Horizontal" Spacing="15">
-            <Button Text="Ask me later" />
-            <Button Text="Save" />
+            <Button Text="Ask me later" Command="{Binding CreateCategoriesLater}"/>
+            <Button Text="Save" Command="{Binding SaveCategories}" />
         </StackLayout>
-        
     </StackLayout>
-    
-
-    
 </ContentPage>
