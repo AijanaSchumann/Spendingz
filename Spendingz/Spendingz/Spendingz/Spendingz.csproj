@@ -40,9 +40,12 @@
     </Compile>
     <Compile Include="Model\Data\Category.cs" />
     <Compile Include="Model\Data\StorageObject.cs" />
+    <Compile Include="Model\AppPages.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IDbStorage.cs" />
     <Compile Include="Services\ILocalStorage.cs" />
+    <Compile Include="Services\INavigation.cs" />
+    <Compile Include="Services\Navigation.cs" />
     <Compile Include="ViewModels\MonthlyOverviewPageViewModel.cs" />
     <Compile Include="ViewModels\SetupPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
