@@ -19,11 +19,8 @@ namespace Spendingz.ViewModels
         private ObservableCollection<Category> _demoCategories;
         private ILocalStorage _localStorage;
         private IDbStorage _dbStorage;
-        private INavigation _navigation;
         private RelayCommand<Category> _deleteCategory;
         private RelayCommand _createCategory;
-        private RelayCommand _saveCategories;
-        private RelayCommand _createLater;
 
         public string NewCategoryTitle {
             get
@@ -37,8 +34,6 @@ namespace Spendingz.ViewModels
             }
         }
 
-
-
         public ObservableCollection<Category> DemoCategories {
             get { return _demoCategories; }
             set {
@@ -47,14 +42,26 @@ namespace Spendingz.ViewModels
             }
         }
 
-        public SetupPageViewModel(ILocalStorage localStorage, IDbStorage dbStorage, INavigation nav)
+        public SetupPageViewModel(ILocalStorage localStorage, IDbStorage dbStorage)
         {
             _localStorage = localStorage;
             _dbStorage = dbStorage;
-            _navigation = nav;
             DemoCategories = new ObservableCollection<Category> { new Category { Title = "Lebensmittel" }, new Category { Title="Kino" }, new Category { Title = "Reisen" } };
 
         }
+
+        public void SaveCategories()
+        {
+            _localStorage.SaveBool(App.SETUP_FINISHED, true);
+            _dbStorage.CreateDatabase<Category>();
+            _dbStorage.CreateEntries(DemoCategories.ToList());
+        }
+
+        public void DontSaveCategories()
+        {
+            _localStorage.SaveBool(App.SETUP_FINISHED, true);
+        }
+
 
         public RelayCommand<Category> DeleteCatagory
         {
@@ -88,49 +95,6 @@ namespace Spendingz.ViewModels
                     return _createCategory;
                 }
                 else { return _createCategory; }
-            }
-        }
-
-        public RelayCommand SaveCategories
-        {
-            get
-            {
-                if (_saveCategories == null)
-                {
-                    _saveCategories = new RelayCommand(()=> 
-                    {
-                        _localStorage.SaveBool(App.SETUP_FINISHED,true);
-                        _dbStorage.CreateDatabase<Category>();
-                        _dbStorage.CreateEntries(DemoCategories.ToList());
-                        _navigation.NavigateTo(AppPages.MonthlyOverviewPage);
-                        _navigation.RemoveFromHistory(AppPages.SetupPage);
-                    });
-                    return _saveCategories;
-                }
-                else
-                {
-                    return _saveCategories;
-                }
-            }
-        }
-
-        public RelayCommand CreateCategoriesLater
-        {
-            get
-            {
-                if(_createLater == null)
-                {
-                    _createLater = new RelayCommand(()=> 
-                    {
-                        _localStorage.SaveBool(App.SETUP_FINISHED, true);
-                        _navigation.NavigateTo(AppPages.MonthlyOverviewPage);
-                    });
-                    return _createLater;
-                }
-                else
-                {
-                    return _createLater;
-                }
             }
         }
         

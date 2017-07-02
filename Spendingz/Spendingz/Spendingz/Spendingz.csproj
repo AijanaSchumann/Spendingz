@@ -46,12 +46,23 @@
     <Compile Include="Services\ILocalStorage.cs" />
     <Compile Include="Services\INavigation.cs" />
     <Compile Include="Services\Navigation.cs" />
+    <Compile Include="ViewModels\MainMasterDetailPageMasterViewModel.cs" />
     <Compile Include="ViewModels\MonthlyOverviewPageViewModel.cs" />
     <Compile Include="ViewModels\SetupPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
-    <Compile Include="Views\MonthlyOverviewPage.xaml.cs">
-      <DependentUpon>MonthlyOverviewPage.xaml</DependentUpon>
+    <Compile Include="Views\MainMasterDetail\DetailPages\MonthlyOverviewDetailPage.xaml.cs">
+      <DependentUpon>MonthlyOverviewDetailPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\MainMasterDetail\DetailPages\SettingsDetailPage.xaml.cs">
+      <DependentUpon>SettingsDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainMasterDetail\MainMasterDetailPage.xaml.cs">
+      <DependentUpon>MainMasterDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainMasterDetail\MainMasterDetailPageMaster.xaml.cs">
+      <DependentUpon>MainMasterDetailPageMaster.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Model\MainMasterDetailPageMenuItem.cs" />
     <Compile Include="Views\SetupPage.xaml.cs">
       <DependentUpon>SetupPage.xaml</DependentUpon>
     </Compile>
@@ -98,13 +109,31 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\MonthlyOverviewPage.xaml">
+    <EmbeddedResource Include="Views\SetupPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Views\SetupPage.xaml">
+    <EmbeddedResource Include="Views\MainMasterDetail\MainMasterDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MainMasterDetail\MainMasterDetailPageMaster.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MainMasterDetail\DetailPages\MonthlyOverviewDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MainMasterDetail\DetailPages\SettingsDetailPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>

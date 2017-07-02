@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace Spendingz.Model
 {
     public enum AppPages
-    { 
-        MonthlyOverviewPage,
-        SetupPage
+    {
+        MonthlyOverviewDetailPage,
+        SettingsDetailPage
     }
 }

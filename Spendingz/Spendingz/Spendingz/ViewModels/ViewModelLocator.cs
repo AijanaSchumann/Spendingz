@@ -22,6 +22,7 @@ namespace Spendingz.ViewModels
 
             SimpleIoc.Default.Register<SetupPageViewModel>();
             SimpleIoc.Default.Register<MonthlyOverviewPageViewModel>();
+            SimpleIoc.Default.Register<MainMasterDetailPageMasterViewModel>();
         }
 
 
@@ -38,6 +39,14 @@ namespace Spendingz.ViewModels
             get
             {
                 return ServiceLocator.Current.GetInstance<MonthlyOverviewPageViewModel>();
+            }
+        }
+
+        public MainMasterDetailPageMasterViewModel MasterDetailMaster
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<MainMasterDetailPageMasterViewModel>();
             }
         }
 

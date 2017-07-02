@@ -10,11 +10,9 @@ namespace Spendingz.Services
 {
     public interface INavigation
     {
-        void GoBack();
         void NavigateTo(AppPages pageKey);
-        void NavigateTo(AppPages pageKey, object parameter);
         void Configure(AppPages pageKey, Type pageType);
-        void Initialize(NavigationPage navigation);
-        void RemoveFromHistory(AppPages page);
+        void Initialize(MasterDetailPage navigation);
+
     }
 }

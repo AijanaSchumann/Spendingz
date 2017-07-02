@@ -4,6 +4,8 @@ using Spendingz.Model;
 using Spendingz.Services;
 using Spendingz.ViewModels;
 using Spendingz.Views;
+using Spendingz.Views.MainMasterDetail;
+using Spendingz.Views.MainMasterDetail.DetailPages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +19,8 @@ namespace Spendingz
     {
         public static readonly string SETUP_FINISHED = "SETUP_FINISHED";
 
+        public static MasterDetailPage Master;
+
         public App()
         {
             InitializeComponent();
@@ -27,8 +31,8 @@ namespace Spendingz
             if (!SimpleIoc.Default.IsRegistered<Services.INavigation>())
             {
                 navigationService = new Navigation();
-                navigationService.Configure(AppPages.SetupPage, typeof(SetupPage));
-                navigationService.Configure(AppPages.MonthlyOverviewPage, typeof(MonthlyOverviewPage));
+                navigationService.Configure(AppPages.MonthlyOverviewDetailPage, typeof(MonthlyOverviewDetailPage));
+                navigationService.Configure(AppPages.SettingsDetailPage, typeof(SettingsDetailPage));
                 SimpleIoc.Default.Register(() => navigationService);
             }
             else
@@ -36,28 +40,23 @@ namespace Spendingz
                 navigationService = SimpleIoc.Default.GetInstance<Services.INavigation>();
             }
 
+            //setup masterDetail and nav service
+            Master = new MainMasterDetailPage();
+            navigationService.Initialize(Master);
+
             if (SimpleIoc.Default.IsRegistered<ILocalStorage>())
             {
                 var localStorage = SimpleIoc.Default.GetInstance<ILocalStorage>();
 
-
-                var firstPage = GetPage(localStorage);
-                //set Navigation page as default page for nav service
-                navigationService.Initialize(firstPage);
-                //you have to init MainPage!
-                MainPage = firstPage;
-            }
-        }
-
-        private NavigationPage GetPage(ILocalStorage storage)
-        {
-            if (!storage.GetBool(SETUP_FINISHED))
-            {
-                return new NavigationPage(new SetupPage());
-            }
-            else
-            {
-                return new NavigationPage(new MonthlyOverviewPage());
+                if (!localStorage.GetBool(SETUP_FINISHED)) //first startup
+                {
+                    MainPage = new SetupPage();
+                }
+                else
+                {
+                    MainPage = Master;
+                    Master = null;
+                }
             }
         }
 
