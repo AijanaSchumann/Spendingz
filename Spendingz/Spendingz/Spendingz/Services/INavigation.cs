@@ -14,5 +14,7 @@ namespace Spendingz.Services
         void Configure(AppPages pageKey, Type pageType);
         void Initialize(MasterDetailPage navigation);
 
+        void GoBack();
+
     }
 }

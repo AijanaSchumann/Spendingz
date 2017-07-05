@@ -15,7 +15,7 @@ namespace Spendingz.Services
     {
         // Dictionary with registered pages in the app
         private readonly Dictionary<AppPages, Type> _pagesByKey = new Dictionary<AppPages, Type>();
-
+      
         // MasterDetailPage to handle navigation between detail pages
         private MasterDetailPage _navigation;
 
@@ -34,6 +34,10 @@ namespace Spendingz.Services
             }
         }
 
+        public void GoBack()
+        {
+            throw new NotImplementedException();
+        }
 
         public void Initialize(MasterDetailPage navigation)
         {
@@ -46,6 +50,7 @@ namespace Spendingz.Services
             {
                 var type = _pagesByKey[pageKey];
                 var page = (Page)Activator.CreateInstance(type);
+               
 
                 _navigation.Detail = new NavigationPage(page);
                 _navigation.IsPresented = false;
