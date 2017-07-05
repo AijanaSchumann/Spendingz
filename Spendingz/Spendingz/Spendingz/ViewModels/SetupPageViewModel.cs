@@ -54,12 +54,15 @@ namespace Spendingz.ViewModels
         {
             _localStorage.SaveBool(App.SETUP_FINISHED, true);
             _dbStorage.CreateDatabase<Category>();
+            _dbStorage.CreateDatabase<Spending>();
             _dbStorage.CreateEntries(DemoCategories.ToList());
         }
 
         public void DontSaveCategories()
         {
             _localStorage.SaveBool(App.SETUP_FINISHED, true);
+            _dbStorage.CreateDatabase<Category>();
+            _dbStorage.CreateDatabase<Spending>();
         }
 
 
