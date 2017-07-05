@@ -2,6 +2,17 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Spendingz.Views.MainMasterDetail.DetailPages.MonthlyOverviewDetailPage"
-             Title="Lorem Ipsum">
-    <Label Text="Lorem Ipsum"/>
+             BindingContext="{Binding Monthly, Source={StaticResource Locator}}"
+             Title="{Binding Title}">
+    <StackLayout>
+        <Button Text="Add Spending" Command="{Binding AddNewSpending}" />
+
+        <ListView Grid.Row="1" ItemsSource="{Binding Spendings}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Category.Title}" Detail="{Binding Amount}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
 </ContentPage>
