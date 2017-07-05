@@ -103,7 +103,8 @@ namespace Spendingz.Droid.Services
                 List<T> allEntries;
                 using (var conn = new SQLiteConnection(CreateDatabasePath<T>()))
                 {
-                    allEntries = conn.Query<T>($"SELECT * FROM {nameof(T)}");
+                    var name = typeof(T).Name;
+                    allEntries = conn.Query<T>($"SELECT * FROM {name}");
                 }
                 return allEntries;
             }
