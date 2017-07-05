@@ -33,6 +33,7 @@ namespace Spendingz
                 navigationService = new Navigation();
                 navigationService.Configure(AppPages.MonthlyOverviewDetailPage, typeof(MonthlyOverviewDetailPage));
                 navigationService.Configure(AppPages.SettingsDetailPage, typeof(SettingsDetailPage));
+                navigationService.Configure(AppPages.AddSpendingDetailPage, typeof(AddSpendingDetailPage));
                 SimpleIoc.Default.Register(() => navigationService);
             }
             else

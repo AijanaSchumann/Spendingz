@@ -9,6 +9,7 @@ namespace Spendingz.Model
     public enum AppPages
     {
         MonthlyOverviewDetailPage,
-        SettingsDetailPage
+        SettingsDetailPage,
+        AddSpendingDetailPage
     }
 }
