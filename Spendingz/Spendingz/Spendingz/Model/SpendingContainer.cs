@@ -12,6 +12,8 @@ namespace Spendingz.Model
         public List<Spending> Spendings { get; set; }
         public Category Category { get; set; }
 
+        public string Currency { get; set; }
+
         private double _amount;
         public double Amount {
             get
@@ -27,7 +29,9 @@ namespace Spendingz.Model
 
         private double CalculateAmount()
         {
-            foreach(var spending in Spendings)
+            _amount = 0;
+
+            foreach (var spending in Spendings)
             {
                 _amount += spending.Amount;
             }
