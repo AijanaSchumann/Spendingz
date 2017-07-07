@@ -4,13 +4,22 @@
              x:Class="Spendingz.Views.MainMasterDetail.DetailPages.MonthlyOverviewDetailPage"
              BindingContext="{Binding Monthly, Source={StaticResource Locator}}"
              Title="{Binding Title}">
-    <StackLayout>
-        <Button Text="Add Spending" Command="{Binding AddNewSpending}" />
+    <StackLayout Margin="10,10,10,10">
+        <StackLayout Orientation="Horizontal" HorizontalOptions="End">
+            <Button Text="Add Spending" Command="{Binding AddNewSpending}" />
+        </StackLayout>
+       
 
         <ListView Grid.Row="1" ItemsSource="{Binding Spendings}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding Category.Title}" Detail="{Binding Amount}" />
+                    <ViewCell>
+                        <StackLayout Orientation="Horizontal">
+                            <Label Margin="0,0,10,0" FontAttributes="Bold" Text="{Binding Category.Title}" />
+                            <Label Margin="0,0,10,0" Text="{Binding Amount}" />
+                            <Label Margin="0,0,10,0" Text="{Binding Currency}" />
+                        </StackLayout>
+                    </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
