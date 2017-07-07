@@ -85,6 +85,7 @@ namespace Spendingz.ViewModels
                     foreach (var category in _userCategories)
                     {
                         SpendingContainer container = new SpendingContainer();
+                        container.Currency = "€";
 
                         container.Category = category;
                         container.Amount = 0;

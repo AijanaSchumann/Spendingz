@@ -10,5 +10,6 @@ namespace Spendingz.Model.Data
     {
         public double Amount { get; set; }
         public int CategoryId { get; set; }
+
     }
 }
