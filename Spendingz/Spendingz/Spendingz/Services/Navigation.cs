@@ -19,6 +19,8 @@ namespace Spendingz.Services
         // MasterDetailPage to handle navigation between detail pages
         private MasterDetailPage _navigation;
 
+        private List<AppPages> _history = new List<AppPages>();
+
         public void Configure(AppPages pageKey, Type pageType)
         {
             lock (_pagesByKey)
@@ -36,7 +38,10 @@ namespace Spendingz.Services
 
         public void GoBack()
         {
-            throw new NotImplementedException();
+            if (_history.Any())
+            {
+                NavigateTo(_history.Last());
+            }
         }
 
         public void Initialize(MasterDetailPage navigation)
@@ -50,10 +55,25 @@ namespace Spendingz.Services
             {
                 var type = _pagesByKey[pageKey];
                 var page = (Page)Activator.CreateInstance(type);
-               
+
+                AddCurrentPageToHistory(_navigation.Detail);
 
                 _navigation.Detail = new NavigationPage(page);
                 _navigation.IsPresented = false;
+            }
+        }
+
+        private void AddCurrentPageToHistory(Page detail)
+        {
+            var navPage = detail as NavigationPage;
+            var type = navPage.CurrentPage.GetType();
+            foreach (var page in _pagesByKey)
+            {
+                if (page.Value.Equals(type))
+                {
+                    _history.Add(page.Key);
+                    break;
+                }
             }
         }
     }
