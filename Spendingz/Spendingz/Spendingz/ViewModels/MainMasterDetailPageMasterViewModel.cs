@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,9 +24,12 @@ namespace Spendingz.ViewModels
 
         public MainMasterDetailPageMasterViewModel(INavigation navigationService)
         {
+            var currentMonth = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
             _menuItems = new List<MainMasterDetailPageMenuItem>
             {
-                new MainMasterDetailPageMenuItem{ Title=DateTime.Now.Month.ToString(), TargetType=AppPages.MonthlyOverviewDetailPage},
+                new MainMasterDetailPageMenuItem{ Title=currentMonth, TargetType =AppPages.MonthlyOverviewDetailPage},
+                new MainMasterDetailPageMenuItem{ Title="Add Spending", TargetType= AppPages.AddSpendingDetailPage },
+                new MainMasterDetailPageMenuItem{Title= "Categories", TargetType=AppPages.CategoryDetailPage},
                 new MainMasterDetailPageMenuItem{ Title="Settings", TargetType= AppPages.SettingsDetailPage }
             };
 
