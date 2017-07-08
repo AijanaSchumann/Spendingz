@@ -10,6 +10,7 @@ namespace Spendingz.Model
     {
         MonthlyOverviewDetailPage,
         SettingsDetailPage,
-        AddSpendingDetailPage
+        AddSpendingDetailPage,
+        CategoryDetailPage
     }
 }

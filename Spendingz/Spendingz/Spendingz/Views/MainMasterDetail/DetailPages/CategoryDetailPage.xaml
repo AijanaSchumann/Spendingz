@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Spendingz.Views.MainMasterDetail.DetailPages.CategoryDetailPage"
+             BindingContext="{Binding Categories, Source={StaticResource Locator}}"
+             x:Name="CategoryPage"
+             Title="Categories">
+    <StackLayout Spacing="10">
+        <Label Text="Erstelle Deine eigenen Kategorien." 
+           VerticalOptions="Start" 
+           HorizontalOptions="StartAndExpand" />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <ListView Grid.Row="1" ItemsSource="{Binding UserCategories}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="{Binding Title}">
+                            <TextCell.ContextActions>
+                                <MenuItem 
+                     Text="Delete" 
+                     Command="{Binding Path=BindingContext.DeleteCategory, Source={x:Reference Name=CategoryPage}}" CommandParameter="{Binding .}"/>
+                            </TextCell.ContextActions>
+                        </TextCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="80"/>
+                </Grid.ColumnDefinitions>
+                <Entry x:Name="newCategory" Grid.Column="0" Text="{Binding CategoryTitle}" Placeholder="New category title" />
+                <Button Grid.Column="1" Text="Add" 
+                    Command="{Binding CreateCategory}" >
+                </Button>
+            </Grid>
+        </Grid>
+        <StackLayout Orientation="Horizontal" Spacing="15">
+            <Button Command="{Binding DontSave}" Text="Cancel"/>
+            <Button Command="{Binding Save}" Text="Save" />
+        </StackLayout>
+    </StackLayout>
+</ContentPage>

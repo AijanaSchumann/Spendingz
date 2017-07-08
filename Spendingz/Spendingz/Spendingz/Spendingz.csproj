@@ -49,12 +49,16 @@
     <Compile Include="Services\INavigation.cs" />
     <Compile Include="Services\Navigation.cs" />
     <Compile Include="ViewModels\AddSpendingDetailPageViewModel.cs" />
+    <Compile Include="ViewModels\CategoryDetailPageViewModel.cs" />
     <Compile Include="ViewModels\MainMasterDetailPageMasterViewModel.cs" />
     <Compile Include="ViewModels\MonthlyOverviewPageViewModel.cs" />
     <Compile Include="ViewModels\SetupPageViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\MainMasterDetail\DetailPages\AddSpendingDetailPage.xaml.cs">
       <DependentUpon>AddSpendingDetailPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MainMasterDetail\DetailPages\CategoryDetailPage.xaml.cs">
+      <DependentUpon>CategoryDetailPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\MainMasterDetail\DetailPages\MonthlyOverviewDetailPage.xaml.cs">
       <DependentUpon>MonthlyOverviewDetailPage.xaml</DependentUpon>

@@ -24,6 +24,7 @@ namespace Spendingz.ViewModels
             SimpleIoc.Default.Register<MonthlyOverviewPageViewModel>();
             SimpleIoc.Default.Register<MainMasterDetailPageMasterViewModel>();
             SimpleIoc.Default.Register<AddSpendingDetailPageViewModel>();
+            SimpleIoc.Default.Register<CategoryDetailPageViewModel>();
         }
 
 
@@ -56,6 +57,14 @@ namespace Spendingz.ViewModels
             get
             {
                 return ServiceLocator.Current.GetInstance<AddSpendingDetailPageViewModel>();
+            }
+        }
+
+        public CategoryDetailPageViewModel Categories
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<CategoryDetailPageViewModel>();
             }
         }
 
