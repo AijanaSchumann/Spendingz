@@ -115,7 +115,7 @@ namespace Spendingz.Droid.Services
             }
         }
 
-        public List<int> CreateEntries<T>(List<T> data) where T : StorageObject
+        public List<int> CreateAllEntries<T>(List<T> data) where T : StorageObject
         {
             List<int> createdEntries = new List<int>();
             try{
@@ -135,6 +135,22 @@ namespace Spendingz.Droid.Services
                 //TODO: add some loging
                 return null;
             }
+        }
+
+
+        public List<int> DeleteAllEntries<T>(List<T> data) where T : StorageObject
+        {
+            var deletedElements = new List<int>();
+            using (var conn = new SQLiteConnection(CreateDatabasePath<T>()))
+            {
+                foreach (var element in data)
+                {
+                    deletedElements.Add(conn.Delete(element));
+                }
+
+            }
+
+            return deletedElements;
         }
     }
     

@@ -13,7 +13,9 @@ namespace Spendingz.Services
 
         int? CreateOrUpdateEntry<T>(T data) where T : StorageObject;
 
-        List<int> CreateEntries<T>(List<T> data) where T : StorageObject;
+        List<int> CreateAllEntries<T>(List<T> data) where T : StorageObject;
+
+        List<int> DeleteAllEntries<T>(List<T> data) where T : StorageObject;
 
         bool DeleteEntry<T>(T data) where T : StorageObject;
 
