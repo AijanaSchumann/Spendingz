@@ -16,6 +16,7 @@ namespace Spendingz.ViewModels
         private List<string> _availableCategories;
         private string _amount;
         private RelayCommand _saveSpending;
+        private RelayCommand _dontSave;
         private INavigation _nav;
         private IDbStorage _storage;
         private List<Category> _categories;
@@ -74,6 +75,14 @@ namespace Spendingz.ViewModels
             get
             {
                return _saveSpending ?? (_saveSpending = new RelayCommand(AddNewSpending));
+            }
+        }
+
+        public RelayCommand DontSave
+        {
+            get
+            {
+                return _dontSave ?? (_dontSave = new RelayCommand(()=> { _nav.GoBack(); }));
             }
         }
 

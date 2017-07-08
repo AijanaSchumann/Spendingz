@@ -11,7 +11,7 @@
         </StackLayout>
         <Entry Keyboard="Numeric" Text="{Binding Amount}" />
         <StackLayout Orientation="Horizontal">
-            <Button Command="{Binding Cancel}" Text="Cancel" />
+            <Button Command="{Binding DontSave}" Text="Cancel" />
             <Button Command="{Binding SaveSpending}" Text="Save" />
         </StackLayout>
        
