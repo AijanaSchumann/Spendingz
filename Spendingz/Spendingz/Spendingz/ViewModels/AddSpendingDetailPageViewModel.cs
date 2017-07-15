@@ -19,12 +19,14 @@ namespace Spendingz.ViewModels
         private RelayCommand _dontSave;
         private INavigation _nav;
         private IDbStorage _storage;
+        private ISpendings _spendingsService;
         private List<Category> _categories;
 
-        public AddSpendingDetailPageViewModel(INavigation navigationService, IDbStorage storage)
+        public AddSpendingDetailPageViewModel(INavigation navigationService, IDbStorage storage, ISpendings spendingsService)
         {
             _nav = navigationService;
             _storage = storage;
+            _spendingsService = spendingsService;
             Amount = "0";
             _categories = _storage.GetAllEntries<Category>();
             AvailableCategories = new List<string>();
@@ -93,7 +95,7 @@ namespace Spendingz.ViewModels
             spending.Amount = result;
             spending.CategoryId = _categories.First(s => s.Title == SelectedCategory).Id;
 
-            _storage.CreateOrUpdateEntry(spending);
+            _spendingsService.SaveSpending(spending);
             _nav.GoBack();
         }
 

@@ -1,7 +1,9 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using Spendingz.Model;
 using Spendingz.Model.Data;
+using Spendingz.Model.Messages;
 using Spendingz.Services;
 using System;
 using System.Collections.Generic;
@@ -33,14 +35,16 @@ namespace Spendingz.ViewModels
         private List<Spending> _userSpendings;
         private IDbStorage _storage;
         private INavigation _nav;
+        private ISpendings _spendingsService;
         private RelayCommand _addNewSpending;
 
         private ObservableCollection<SpendingContainer> _spendingz;
        
 
-        public MonthlyOverviewPageViewModel(IDbStorage storage, INavigation navigationService)
+        public MonthlyOverviewPageViewModel(ISpendings spendingsService, IDbStorage dbStorage, INavigation navigationService)
         {
-            _storage = storage;
+            _spendingsService = spendingsService;
+            _storage = dbStorage;
             _nav = navigationService;
 
             Title = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
@@ -48,6 +52,7 @@ namespace Spendingz.ViewModels
             _userCategories = new List<Category>();
             _userSpendings = new List<Spending>();
             Initialize();
+            Messenger.Default.Register<NewSpendingMessage>(this, UpdateSpendings);
         }
 
         public ObservableCollection<SpendingContainer> Spendings
@@ -76,11 +81,13 @@ namespace Spendingz.ViewModels
         private void Initialize()
         {
             var categoryEntries = _storage.GetAllEntries<Category>();
-            var spendingEntries = _storage.GetAllEntries<Spending>();
-            if(categoryEntries!= null && spendingEntries != null)
+            var spendingEntries = _spendingsService.GetAllSpendings();
+            Spendings = new ObservableCollection<SpendingContainer>();
+
+            if (categoryEntries!= null && spendingEntries != null)
             {
-                _userCategories.AddRange(categoryEntries);
-                _userSpendings.AddRange(spendingEntries);
+                _userCategories =categoryEntries;
+                _userSpendings = new List<Spending>(spendingEntries);
 
                     foreach (var category in _userCategories)
                     {
@@ -104,6 +111,14 @@ namespace Spendingz.ViewModels
             }
            
           
+        }
+
+        public void UpdateSpendings(NewSpendingMessage message)
+        {
+            if (message.Update)
+            {
+                Initialize();
+            }
         }
 
     }

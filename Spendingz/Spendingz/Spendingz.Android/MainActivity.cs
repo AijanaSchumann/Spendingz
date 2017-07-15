@@ -28,7 +28,9 @@ namespace Spendingz.Droid
 
         private void Setup()
         {
-            SimpleIoc.Default.Register<IDbStorage>(()=> new DbStorage());
+            var dbStorage = new DbStorage();
+            SimpleIoc.Default.Register<IDbStorage>(()=> dbStorage);
+            SimpleIoc.Default.Register<ISpendings>(() => new SpendingsService(dbStorage));
             SimpleIoc.Default.Register<ILocalStorage>(()=> new LocalStorage(this));
         }
     }
