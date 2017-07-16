@@ -42,9 +42,12 @@
     <Compile Include="Model\Data\Spending.cs" />
     <Compile Include="Model\Data\StorageObject.cs" />
     <Compile Include="Model\AppPages.cs" />
+    <Compile Include="Model\Messages\NewCategoryMessage.cs" />
     <Compile Include="Model\Messages\NewSpendingMessage.cs" />
     <Compile Include="Model\SpendingContainer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\CategoryService.cs" />
+    <Compile Include="Services\ICategory.cs" />
     <Compile Include="Services\IDbStorage.cs" />
     <Compile Include="Services\ILocalStorage.cs" />
     <Compile Include="Services\INavigation.cs" />

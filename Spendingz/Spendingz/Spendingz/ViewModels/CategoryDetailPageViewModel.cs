@@ -22,14 +22,14 @@ namespace Spendingz.ViewModels
         private RelayCommand _save;
         private RelayCommand _dontSave;
         private INavigation _navigationService;
-        private IDbStorage _storageService;
+        private ICategory _categoryService;
         
 
-        public CategoryDetailPageViewModel(INavigation navigationService, IDbStorage storageService)
+        public CategoryDetailPageViewModel(INavigation navigationService, ICategory categoryService)
         {
             _navigationService = navigationService;
-            _storageService = storageService;
-            var categories = _storageService.GetAllEntries<Category>();
+            _categoryService = categoryService;
+            var categories = _categoryService.GetAllCategories();
             UserCategories = new ObservableCollection<Category>(categories);
             _newCategories = new List<Category>();
             _deleteCategories = new List<Category>();
@@ -100,14 +100,17 @@ namespace Spendingz.ViewModels
         {
             DeleteCategories();
             SaveCategories();
+            _newCategories.Clear();
+            _deleteCategories.Clear();
             _navigationService.GoBack();
+
         }
 
         private void SaveCategories()
         {
             if (_newCategories.Any())
             {
-                _storageService.CreateAllEntries(_newCategories);
+                _categoryService.SaveCategories(_newCategories);
             }
         }
 
@@ -129,7 +132,8 @@ namespace Spendingz.ViewModels
                     }
                 }
 
-                _storageService.DeleteAllEntries(deleteAll);
+                _categoryService.DeleteAllCategories(deleteAll);
+                
             }
         }
 

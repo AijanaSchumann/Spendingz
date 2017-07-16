@@ -33,7 +33,7 @@ namespace Spendingz.ViewModels
 
         private List<Category> _userCategories;
         private List<Spending> _userSpendings;
-        private IDbStorage _storage;
+        private ICategory _categoryService;
         private INavigation _nav;
         private ISpendings _spendingsService;
         private RelayCommand _addNewSpending;
@@ -41,10 +41,10 @@ namespace Spendingz.ViewModels
         private ObservableCollection<SpendingContainer> _spendingz;
        
 
-        public MonthlyOverviewPageViewModel(ISpendings spendingsService, IDbStorage dbStorage, INavigation navigationService)
+        public MonthlyOverviewPageViewModel(ISpendings spendingsService, ICategory categoryService, INavigation navigationService)
         {
             _spendingsService = spendingsService;
-            _storage = dbStorage;
+            _categoryService = categoryService;
             _nav = navigationService;
 
             Title = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(DateTime.Now.Month);
@@ -53,6 +53,7 @@ namespace Spendingz.ViewModels
             _userSpendings = new List<Spending>();
             Initialize();
             Messenger.Default.Register<NewSpendingMessage>(this, UpdateSpendings);
+            Messenger.Default.Register<NewCategoryMessage>(this, UpdateCategories);
         }
 
         public ObservableCollection<SpendingContainer> Spendings
@@ -80,13 +81,13 @@ namespace Spendingz.ViewModels
 
         private void Initialize()
         {
-            var categoryEntries = _storage.GetAllEntries<Category>();
+            var categoryEntries = _categoryService.GetAllCategories();
             var spendingEntries = _spendingsService.GetAllSpendings();
             Spendings = new ObservableCollection<SpendingContainer>();
 
             if (categoryEntries!= null && spendingEntries != null)
             {
-                _userCategories =categoryEntries;
+                _userCategories = new List<Category>(categoryEntries);
                 _userSpendings = new List<Spending>(spendingEntries);
 
                     foreach (var category in _userCategories)
@@ -114,6 +115,14 @@ namespace Spendingz.ViewModels
         }
 
         public void UpdateSpendings(NewSpendingMessage message)
+        {
+            if (message.Update)
+            {
+                Initialize();
+            }
+        }
+
+        public void UpdateCategories(NewCategoryMessage message)
         {
             if (message.Update)
             {

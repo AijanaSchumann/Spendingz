@@ -1,6 +1,8 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
 using Spendingz.Model.Data;
+using Spendingz.Model.Messages;
 using Spendingz.Services;
 using System;
 using System.Collections.Generic;
@@ -18,25 +20,32 @@ namespace Spendingz.ViewModels
         private RelayCommand _saveSpending;
         private RelayCommand _dontSave;
         private INavigation _nav;
-        private IDbStorage _storage;
+        private ICategory _categoryService;
         private ISpendings _spendingsService;
         private List<Category> _categories;
 
-        public AddSpendingDetailPageViewModel(INavigation navigationService, IDbStorage storage, ISpendings spendingsService)
+        public AddSpendingDetailPageViewModel(INavigation navigationService, ICategory categoryService, ISpendings spendingsService)
         {
             _nav = navigationService;
-            _storage = storage;
+            _categoryService = categoryService;
             _spendingsService = spendingsService;
+            Messenger.Default.Register<NewCategoryMessage>(this, UpdateCategories);
             Amount = "0";
-            _categories = _storage.GetAllEntries<Category>();
-            AvailableCategories = new List<string>();
-            foreach(var s in _categories)
+            _categories = new List<Category>(_categoryService.GetAllCategories());
+            AvailableCategories = _categories.Select(c => c.Title).ToList();
+
+
+
+        }
+
+        private void UpdateCategories(NewCategoryMessage category)
+        {
+            if (category.Update)
             {
-                AvailableCategories.Add(s.Title);
+                _categories = new List<Category>(_categoryService.GetAllCategories());
+                AvailableCategories = _categories.Select(c => c.Title).ToList();
+
             }
-           
-
-
         }
 
         public List<string> AvailableCategories {
