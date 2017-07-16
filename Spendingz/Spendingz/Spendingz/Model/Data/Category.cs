@@ -25,5 +25,39 @@ namespace Spendingz.Model.Data
             get { return _description; }
             set { _description = value; }
         }
+
+        public override bool Equals(object obj)
+        {
+            return Equals(obj as Category);
+        }
+
+        public bool Equals(Category category)
+        {
+            if (category == null)
+            {
+                return false;
+            }
+
+            if (ReferenceEquals(this, category))
+            {
+                return true;
+            }
+
+            return (Title == category.Title && Id == category.Id);
+        }
+
+       
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hash = 19;
+                hash = (hash * 7) + (Title == null ? 0 : Title.GetHashCode());
+                hash = (hash * 13) + Id.GetHashCode();
+                return hash;
+            }
+         
+        }
     }
 }
